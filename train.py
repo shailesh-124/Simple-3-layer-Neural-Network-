@@ -73,8 +73,8 @@ def train():
             start_idx = b * batch_size
             end_idx = start_idx + batch_size
 
-            x_batch = x_shuffled[start_idx, end_idx]
-            y_batch = y_shuffled[start_idx, end_idx]
+            x_batch = x_shuffled[start_idx:end_idx]
+            y_batch = y_shuffled[start_idx:end_idx]
 
             probs = model.Forward(x_batch)
 
@@ -93,11 +93,15 @@ def train():
         val_acc = compute_accuracy(val_probs, y_test)
 
         #epoch summary
-
         print(
             f"Epoch:{epoch}/{epochs} - Loss:{avg_loss:0.2f} - Train acc: {train_acc*100:.2f}"
               f"Test acc: {val_acc*100:.2f}"
               )
+    print("Training complete")
+    model.save_weights("model_weights.npz")
+
+if __name__=="__main__":
+    train()
 
 
 

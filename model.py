@@ -57,11 +57,18 @@ class SimpleNeuralNetwork:
         self.w2 -= learning_rate*self.db2
         self.b2 -= learning_rate*self.db2
 
+    def save_weights(self, filepath="model_weights.npz"):
+        """saves weights and biases to a compressed npz file"""
+        np.savez(filepath, w1=self.w1, w2=self.w2, b1=self.b1, b2=self.b2)
+        print(f"Model parameters saved to {filepath}")
 
+    def load_weights(self, filepath="model_weights.npz"):
+        "loads the weights from the .npz file"
 
-
-
-
-
+        weights = np.load(filepath)
+        self.w1 = weights["w1"]
+        self.w2 = weights["w2"]
+        self.b1 = weights["b1"]
+        self.b2 = weights["b2"]
 
 
