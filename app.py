@@ -64,15 +64,7 @@ with col2:
             img_resized = centered_img.resize((28, 28), Image.Resampling.LANCZOS)
         else:
             img_resized = img.resize((28, 28))
-            # --- DEBUG VIEW START ---
-        # Add this right after img_resized is defined, before flattening!
-        with col2:
-            st.write("### 🔍 Model's View")
-            st.caption("This is the exact 28x28 grayscale vector we feed the model.")
-            # Scale the image visually to make it viewable in the UI.
-            debug_view = img_resized.resize((140, 140), Image.Resampling.NEAREST)
-            st.image(debug_view, width=140)
-        # --- DEBUG VIEW END ---
+            
 
         # 4. Normalize to [0.0, 1.0] and flatten to (1, 784)
         img_array = np.array(img_resized) / 255.0
@@ -83,7 +75,7 @@ with col2:
         predicted_digit = np.argmax(probabilities)
 
         st.metric(label="Predicted Digit", value=f"{predicted_digit}")
-        st.write(f"**Confidence: **{probabilities[predicted_digit]*100:.2f}")
+        st.write(f"Confidence: {probabilities[predicted_digit]*100:.2f}")
         st.bar_chart(probabilities)
 
     else:
